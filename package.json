@@ -1,0 +1,23 @@
+{
+    "name": "netflix-2",
+    "version": "1.0.0",
+    "description": "A Netflix clone application",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "build": "next build",
+        "dev": "next dev",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "next": "latest",
+        "react": "latest",
+        "react-dom": "latest"
+    },
+    "devDependencies": {
+        "eslint": "latest",
+        "eslint-config-next": "latest"
+    },
+    "author": "Felipe Oliveira",
+    "license": "MIT"
+}
