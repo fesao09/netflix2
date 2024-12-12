@@ -28,8 +28,6 @@ console.log('Environment:', process.env);
 
 // Middleware para analisar o corpo da requisição
 app.use(bodyParser.json());
-
-// Middleware para analisar dados codificados em URL
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'public')));
