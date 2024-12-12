@@ -16,6 +16,7 @@ console.log('Firebase initialized:', firebaseConfig);
 
 // TMDB configuration
 const tmdbApiKey = '5c66fecac3410a4da2709f1d944be38c'; // Substitua por sua chave de API do TMDB
+const tmdbImageBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Document loaded');
@@ -37,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
       data.results.forEach((item) => {
         const div = document.createElement('div');
         div.innerHTML = `
+          <img src="${tmdbImageBaseUrl}${item.poster_path}" alt="${item.title || item.name}">
           <h3>${item.title || item.name}</h3>
           <p>${item.release_date || item.first_air_date}</p>
           <button onclick="addMovie('${item.title || item.name}', '${item.release_date || item.first_air_date}')">Adicionar</button>
