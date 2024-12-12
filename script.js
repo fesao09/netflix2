@@ -80,6 +80,7 @@ function categorizeMovie(movie) {
   categoryDiv.appendChild(div);
   saveToLocalStorage(movie, category);
   updateWatchTimeChart();
+  saveData();
 }
 
 function showDetails(item) {
@@ -185,6 +186,7 @@ function saveEpisodeWatched(episodeId) {
   const isChecked = document.getElementById(`episode-${episodeId}`).checked;
   localStorage.setItem(`episode-${episodeId}`, isChecked);
   updateSeriesProgressChart();
+  saveData();
 }
 
 function markSeasonAsWatched(tvId, seasonNumber) {
@@ -196,6 +198,7 @@ function markSeasonAsWatched(tvId, seasonNumber) {
         localStorage.setItem(`episode-${episode.id}`, true);
       });
       updateSeriesProgressChart(tvId, [season]);
+      saveData();
     })
     .catch(error => console.error('Error:', error));
 }
@@ -301,6 +304,70 @@ function clearResults() {
   resultsGrid.innerHTML = '';
   searchResultsSection.classList.add('hidden');
   updateWatchTimeChart();
+  saveData();
 }
 
-window.onload = loadFromLocalStorage;
+// Function to save data to Firestore
+async function saveData() {
+  const data = {
+    filmesAssistidos: document.getElementById('filmes-assistidos').innerHTML,
+    filmesParaAssistir: document.getElementById('filmes-para-assistir').innerHTML,
+    seriesEmAndamento: document.getElementById('series-em-andamento').innerHTML,
+    seriesAssistidas: document.getElementById('series-assistidas').innerHTML,
+  };
+  try {
+    await db.collection('userData').doc('user1').set(data);
+    console.log('Data saved successfully:', data);
+  } catch (error) {
+    console.error('Error saving data:', error);
+  }
+}
+
+// Function to load data from Firestore
+async function loadData() {
+  try {
+    const doc = await db.collection('userData').doc('user1').get();
+    if (doc.exists) {
+      const data = doc.data();
+      document.getElementById('filmes-assistidos').innerHTML = data.filmesAssistidos;
+      document.getElementById('filmes-para-assistir').innerHTML = data.filmesParaAssistir;
+      document.getElementById('series-em-andamento').innerHTML = data.seriesEmAndamento;
+      document.getElementById('series-assistidas').innerHTML = data.seriesAssistidas;
+      console.log('Data loaded successfully:', data);
+    } else {
+      console.log('No data found');
+    }
+  } catch (error) {
+    console.error('Error loading data:', error);
+  }
+}
+
+// Call loadData when the page loads
+window.onload = loadData;
+
+// Function to fetch and display search results
+function fetchSearchResults(query) {
+  // Example API call
+  fetch(`https://api.example.com/search?q=${query}`)
+    .then(response => response.json())
+    .then(data => {
+      // Update the DOM with search results
+    });
+}
+
+// Function to update categories
+function updateCategories() {
+  // Example code to update categories
+}
+
+// Function to list episodes
+function listEpisodes() {
+  // Example code to list episodes
+}
+
+// Function to update charts
+function updateCharts() {
+  // Example code to update charts
+}
+
+// Add more event listeners and functions as needed
