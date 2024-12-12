@@ -34,6 +34,7 @@ console.log('Environment:', process.env);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Servir arquivos estáticos do diretório 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
