@@ -3,7 +3,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyDs877-qqhixjzOtODzNEe66zJjRgG0ho0",
   authDomain: "netflix2-40dbe.firebaseapp.com",
   projectId: "netflix2-40dbe",
-  storageBucket: "netflix2-40dbe.appspot.com",
+  storageBucket: "netflix2-40dbe",
   messagingSenderId: "272948667951",
   appId: "1:272948667951:web:eb84b6fd3327eaacaa08da",
   measurementId: "G-D8ZQWFDDWT"
@@ -20,6 +20,11 @@ const tmdbImageBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Document loaded');
+
+  loadCategoryItems('filmes-assistidos');
+  loadCategoryItems('filmes-para-assistir');
+  loadCategoryItems('series-em-andamento');
+  loadCategoryItems('series-assistidas');
 
   document.getElementById('search-btn').addEventListener('click', async () => {
     const query = document.getElementById('search-input').value;
@@ -98,6 +103,18 @@ function displayMovieInCategory(title, releaseDate, posterPath, category) {
     <p>${releaseDate}</p>
   `;
   categoryGrid.appendChild(div);
+}
+
+async function loadCategoryItems(category) {
+  try {
+    const querySnapshot = await db.collection(category).get();
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      displayMovieInCategory(data.title, data.releaseYear, data.posterPath, category);
+    });
+  } catch (error) {
+    console.error(`Error loading items for category ${category}: `, error);
+  }
 }
 
 async function deleteMovie(id) {
