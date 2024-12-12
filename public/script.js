@@ -12,6 +12,8 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+console.log('Firebase initialized:', firebaseConfig);
+
 // TMDB configuration
 const tmdbApiKey = '5c66fecac3410a4da2709f1d944be38c'; // Substitua por sua chave de API do TMDB
 
@@ -23,22 +25,26 @@ document.getElementById('search-btn').addEventListener('click', async () => {
   console.log(`Buscando por: ${query}`);
 
   // Buscar filmes e séries do TMDB ordenados pelos mais recentes
-  const response = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${tmdbApiKey}&query=${query}&sort_by=release_date.desc`);
-  const data = await response.json();
+  try {
+    const response = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${tmdbApiKey}&query=${query}&sort_by=release_date.desc`);
+    const data = await response.json();
 
-  console.log('Resultados da busca:', data);
+    console.log('Resultados da busca:', data);
 
-  data.results.forEach((item) => {
-    const div = document.createElement('div');
-    div.innerHTML = `
-      <h3>${item.title || item.name}</h3>
-      <p>${item.release_date || item.first_air_date}</p>
-      <button onclick="addMovie('${item.title || item.name}', '${item.release_date || item.first_air_date}')">Adicionar</button>
-    `;
-    resultsGrid.appendChild(div);
-  });
+    data.results.forEach((item) => {
+      const div = document.createElement('div');
+      div.innerHTML = `
+        <h3>${item.title || item.name}</h3>
+        <p>${item.release_date || item.first_air_date}</p>
+        <button onclick="addMovie('${item.title || item.name}', '${item.release_date || item.first_air_date}')">Adicionar</button>
+      `;
+      resultsGrid.appendChild(div);
+    });
 
-  document.getElementById('search-results').classList.remove('hidden');
+    document.getElementById('search-results').classList.remove('hidden');
+  } catch (error) {
+    console.error('Erro ao buscar dados do TMDB:', error);
+  }
 });
 
 document.getElementById('clear-btn').addEventListener('click', () => {
