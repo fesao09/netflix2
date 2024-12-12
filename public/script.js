@@ -3,7 +3,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyDs877-qqhixjzOtODzNEe66zJjRgG0ho0",
   authDomain: "netflix2-40dbe.firebaseapp.com",
   projectId: "netflix2-40dbe",
-  storageBucket: "netflix2-40dbe.appspot.com",
+  storageBucket: "netflix2-40dbe",
   messagingSenderId: "272948667951",
   appId: "1:272948667951:web:eb84b6fd3327eaacaa08da",
   measurementId: "G-D8ZQWFDDWT"
@@ -20,9 +20,13 @@ document.getElementById('search-btn').addEventListener('click', async () => {
   const resultsGrid = document.getElementById('results-grid');
   resultsGrid.innerHTML = '';
 
+  console.log(`Buscando por: ${query}`);
+
   // Buscar filmes e séries do TMDB ordenados pelos mais recentes
   const response = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${tmdbApiKey}&query=${query}&sort_by=release_date.desc`);
   const data = await response.json();
+
+  console.log('Resultados da busca:', data);
 
   data.results.forEach((item) => {
     const div = document.createElement('div');
