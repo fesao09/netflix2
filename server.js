@@ -32,7 +32,12 @@ try {
   process.exit(1);
 }
 
-const db = firebase.firestore();
+const db = firebase.firestore ? firebase.firestore() : null;
+
+if (!db) {
+  console.error('Erro ao inicializar o Firestore');
+  process.exit(1);
+}
 
 // Log environment details
 console.log('Environment:', process.env);
