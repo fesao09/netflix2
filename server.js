@@ -39,6 +39,9 @@ app.get('/', (req, res) => {
 // Example route to add data to Firestore
 app.post('/add', async (req, res) => {
   try {
+    if (!req.body || !req.body.title || !req.body.director || !req.body.releaseYear) {
+      return res.status(400).send('Missing required fields');
+    }
     const docRef = await db.collection('movies').add({
       title: req.body.title,
       director: req.body.director,
