@@ -24,7 +24,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 try {
-  if (!firebase.apps.length) {
+  if (firebase && firebase.apps && !firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
 } catch (error) {
