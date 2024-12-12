@@ -4,7 +4,7 @@ const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, addDoc, deleteDoc, doc } = require('firebase/firestore');
 const bodyParser = require('body-parser');
 const app = express();
-const port = process.env.PORT || 3001; // Alterar a porta para 3006
+const port = process.env.PORT || 3000; // Alterar a porta para 3006
 
 // Firebase configuration
 const firebaseConfig = {
