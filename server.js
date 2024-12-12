@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const { initializeApp } = require('firebase/app');
-const { getFirestore, collection, addDoc } = require('firebase/firestore');
+const { getFirestore, collection, addDoc, deleteDoc, doc } = require('firebase/firestore');
 const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -56,6 +56,18 @@ app.post('/add', async (req, res) => {
   } catch (error) {
     console.error('Error adding document: ', error);
     res.status(500).send('Error adding document');
+  }
+});
+
+// Route to delete data from Firestore
+app.delete('/delete/:id', async (req, res) => {
+  try {
+    const docId = req.params.id;
+    await deleteDoc(doc(db, 'movies', docId));
+    res.status(200).send(`Document with ID: ${docId} deleted`);
+  } catch (error) {
+    console.error('Error deleting document: ', error);
+    res.status(500).send('Error deleting document');
   }
 });
 
