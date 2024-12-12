@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="${tmdbImageBaseUrl}${item.poster_path}" alt="${item.title || item.name}">
           <h3>${item.title || item.name}</h3>
           <p>${item.release_date || item.first_air_date}</p>
-          <button onclick="showCategoryModal('${item.title || item.name}', '${item.release_date || item.first_air_date}')">Adicionar</button>
+          <button onclick="showCategoryModal('${item.title || item.name}', '${item.release_date || item.first_air_date}', '${tmdbImageBaseUrl}${item.poster_path}')">Adicionar</button>
         `;
         resultsGrid.appendChild(div);
       });
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-function showCategoryModal(title, releaseDate) {
+function showCategoryModal(title, releaseDate, posterPath) {
   const modal = document.getElementById('category-modal');
   const modalTitle = document.getElementById('modal-title');
   const modalReleaseDate = document.getElementById('modal-release-date');
@@ -69,22 +69,35 @@ function showCategoryModal(title, releaseDate) {
 
   document.getElementById('add-to-category-btn').onclick = () => {
     const category = document.getElementById('category-select').value;
-    addMovieToCategory(title, releaseDate, category);
+    addMovieToCategory(title, releaseDate, posterPath, category);
     modal.style.display = 'none';
   };
 }
 
-async function addMovieToCategory(title, releaseDate, category) {
+async function addMovieToCategory(title, releaseDate, posterPath, category) {
   try {
     const docRef = await db.collection(category).add({
       title: title,
-      releaseYear: releaseDate.split('-')[0]
+      releaseYear: releaseDate.split('-')[0],
+      posterPath: posterPath
     });
     alert(`Filme/Série adicionada à categoria ${category} com ID: ${docRef.id}`);
+    displayMovieInCategory(title, releaseDate, posterPath, category);
   } catch (error) {
     console.error('Error adding document: ', error);
     alert('Erro ao adicionar filme/série');
   }
+}
+
+function displayMovieInCategory(title, releaseDate, posterPath, category) {
+  const categoryGrid = document.getElementById(category).querySelector('.movies-grid');
+  const div = document.createElement('div');
+  div.innerHTML = `
+    <img src="${posterPath}" alt="${title}">
+    <h3>${title}</h3>
+    <p>${releaseDate}</p>
+  `;
+  categoryGrid.appendChild(div);
 }
 
 async function deleteMovie(id) {
