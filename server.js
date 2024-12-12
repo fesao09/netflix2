@@ -23,8 +23,13 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
+try {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+} catch (error) {
+  console.error('Erro ao inicializar o Firebase:', error);
+  process.exit(1);
 }
 
 const db = firebase.firestore();
