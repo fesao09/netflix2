@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
-const firebase = require('firebase/app');
-require('firebase/firestore');
+const { initializeApp } = require('firebase/app');
+const { getFirestore, collection, addDoc } = require('firebase/firestore');
 const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -18,19 +18,12 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+let db;
 try {
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
+  const app = initializeApp(firebaseConfig);
+  db = getFirestore(app);
 } catch (error) {
   console.error('Erro ao inicializar o Firebase:', error);
-  process.exit(1);
-}
-
-const db = firebase.firestore();
-
-if (!db) {
-  console.error('Erro ao inicializar o Firestore');
   process.exit(1);
 }
 
@@ -53,7 +46,7 @@ app.post('/add', async (req, res) => {
     if (!req.body || !req.body.title || !req.body.director || !req.body.releaseYear) {
       return res.status(400).send('Missing required fields');
     }
-    const docRef = await db.collection('movies').add({
+    const docRef = await addDoc(collection(db, 'movies'), {
       title: req.body.title,
       director: req.body.director,
       releaseYear: req.body.releaseYear
