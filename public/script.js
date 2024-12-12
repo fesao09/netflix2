@@ -74,6 +74,7 @@ function showCategoryModal(title, releaseDate, posterPath) {
 
   document.getElementById('add-to-category-btn').onclick = () => {
     const category = document.getElementById('category-select').value;
+    console.log(`Adicionando ${title} à categoria ${category}`);
     addMovieToCategory(title, releaseDate, posterPath, category);
     modal.style.display = 'none';
   };
@@ -86,6 +87,7 @@ async function addMovieToCategory(title, releaseDate, posterPath, category) {
       releaseYear: releaseDate.split('-')[0],
       posterPath: posterPath
     });
+    console.log(`Filme/Série adicionada à categoria ${category} com ID: ${docRef.id}`);
     alert(`Filme/Série adicionada à categoria ${category} com ID: ${docRef.id}`);
     displayMovieInCategory(title, releaseDate, posterPath, category);
   } catch (error) {
