@@ -42,9 +42,14 @@ header h1 {
   border-radius: 0 4px 4px 0;
 }
 
+<<<<<<< HEAD
 .search-bar button:hover {
   background-color: var(--hover-color);
   will-change: background-color;
+=======
+search-bar button:hover {
+  background-color: #f40612;
+>>>>>>> aef7227853bdcd04ff68e107555592f123dd7363
 }
 
 #clear-btn {
