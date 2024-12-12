@@ -19,7 +19,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 try {
-  if (firebase && firebase.apps && !firebase.apps.length) {
+  if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
 } catch (error) {
@@ -27,7 +27,7 @@ try {
   process.exit(1);
 }
 
-const db = firebase.firestore ? firebase.firestore() : null;
+const db = firebase.firestore();
 
 if (!db) {
   console.error('Erro ao inicializar o Firestore');
