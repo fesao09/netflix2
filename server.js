@@ -6,6 +6,12 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Verificar se o Firebase está disponível
+if (!firebase || !firebase.apps) {
+  console.error('Firebase não está disponível');
+  process.exit(1);
+}
+
 // Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -17,7 +23,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-if (!firebase.apps.length) {
+if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
 }
 
@@ -64,10 +70,4 @@ app.use((err, req, res, next) => {
 // Log request details
 app.use((req, res, next) => {
   console.log('Request URL:', req.originalUrl);
-  console.log('Request Method:', req.method);
-  next();
-});
-
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+  c
