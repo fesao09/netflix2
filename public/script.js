@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="${tmdbImageBaseUrl}${item.poster_path}" alt="${item.title || item.name}">
           <h3>${item.title || item.name}</h3>
           <p>${item.release_date || item.first_air_date}</p>
-          <button onclick="addMovie('${item.title || item.name}', '${item.release_date || item.first_air_date}')">Adicionar</button>
+          <button onclick="showCategoryModal('${item.title || item.name}', '${item.release_date || item.first_air_date}')">Adicionar</button>
         `;
         resultsGrid.appendChild(div);
       });
@@ -59,13 +59,28 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-async function addMovie(title, releaseDate) {
+function showCategoryModal(title, releaseDate) {
+  const modal = document.getElementById('category-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalReleaseDate = document.getElementById('modal-release-date');
+  modalTitle.textContent = title;
+  modalReleaseDate.textContent = releaseDate;
+  modal.style.display = 'block';
+
+  document.getElementById('add-to-category-btn').onclick = () => {
+    const category = document.getElementById('category-select').value;
+    addMovieToCategory(title, releaseDate, category);
+    modal.style.display = 'none';
+  };
+}
+
+async function addMovieToCategory(title, releaseDate, category) {
   try {
-    const docRef = await db.collection('movies').add({
+    const docRef = await db.collection(category).add({
       title: title,
       releaseYear: releaseDate.split('-')[0]
     });
-    alert(`Filme/Série adicionada com ID: ${docRef.id}`);
+    alert(`Filme/Série adicionada à categoria ${category} com ID: ${docRef.id}`);
   } catch (error) {
     console.error('Error adding document: ', error);
     alert('Erro ao adicionar filme/série');

@@ -60,6 +60,21 @@
     </div>
   </div>
   <div id="episode-details" class="episode-details hidden"></div>
+  <div id="category-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="document.getElementById('category-modal').style.display='none'">&times;</span>
+      <h2>Adicionar à Categoria</h2>
+      <p id="modal-title"></p>
+      <p id="modal-release-date"></p>
+      <select id="category-select">
+        <option value="filmes-assistidos">Filmes Assistidos</option>
+        <option value="filmes-para-assistir">Filmes para Assistir</option>
+        <option value="series-em-andamento">Séries em Andamento</option>
+        <option value="series-assistidas">Séries Assistidas</option>
+      </select>
+      <button id="add-to-category-btn">Adicionar</button>
+    </div>
+  </div>
   <footer>
     <p>2024 - Criado por Felipe de Oliveira Gonçalves - Todos os Direitos Reservados</p>
   </footer>
