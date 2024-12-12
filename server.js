@@ -4,7 +4,7 @@ const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, addDoc, deleteDoc, doc } = require('firebase/firestore');
 const bodyParser = require('body-parser');
 const app = express();
-const port = process.env.PORT || 3005; // Alterar a porta para 3004
+const port = process.env.PORT || 3006; // Alterar a porta para 3006
 
 // Firebase configuration
 const firebaseConfig = {
@@ -78,7 +78,7 @@ app.use((err, req, res, next) => {
   res.status(500).send(`Something broke! Error: ${err.message}`);
 });
 
-// Log request detalhes
+// Log request details
 app.use((req, res, next) => {
   console.log('Request URL:', req.originalUrl);
   console.log('Request Method:', req.method);
