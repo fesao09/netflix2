@@ -78,7 +78,7 @@ app.use((err, req, res, next) => {
   res.status(500).send(`Something broke! Error: ${err.message}`);
 });
 
-// Log request details
+// Log request detalhes
 app.use((req, res, next) => {
   console.log('Request URL:', req.originalUrl);
   console.log('Request Method:', req.method);

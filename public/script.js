@@ -3,7 +3,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyDs877-qqhixjzOtODzNEe66zJjRgG0ho0",
   authDomain: "netflix2-40dbe.firebaseapp.com",
   projectId: "netflix2-40dbe",
-  storageBucket: "netflix2-40dbe",
+  storageBucket: "netflix2-40dbe.appspot.com",
   messagingSenderId: "272948667951",
   appId: "1:272948667951:web:eb84b6fd3327eaacaa08da",
   measurementId: "G-D8ZQWFDDWT"
