@@ -15,7 +15,7 @@ const db = firebase.firestore();
 console.log('Firebase initialized:', firebaseConfig);
 
 // TMDB configuration
-const tmdbApiKey = '5c66fecac3410a4da2709f1d944be38c'; // Substitua por sua chave de API do TMDB
+const tmdbApiKey = process.env.TMDB_API_KEY; // Usar variável de ambiente para a chave de API do TMDB
 const tmdbImageBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
 document.addEventListener('DOMContentLoaded', () => {
