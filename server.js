@@ -10,6 +10,7 @@ const port = process.env.PORT || 3001; // Alterar a porta para 3006
 const firebaseConfig = {
   apiKey: "AIzaSyDs877-qqhixjzOtODzNEe66zJjRgG0ho0",
   authDomain: "netflix2-40dbe.firebaseapp.com",
+  databaseURL: "https://netflix2-40dbe-default-rtdb.firebaseio.com",
   projectId: "netflix2-40dbe",
   storageBucket: "netflix2-40dbe.appspot.com",
   messagingSenderId: "272948667951",
